@@ -1,0 +1,25 @@
+\begin{thebibliography}{}
+
+\bibitem[Brockman et~al., 2016]{1606.01540}
+Brockman, G., Cheung, V., Pettersson, L., Schneider, J., Schulman, J., Tang,
+  J., and Zaremba, W. (2016).
+\newblock Openai gym.
+
+\bibitem[Devin et~al., 2016]{DBLP:journals/corr/DevinGDAL16}
+Devin, C., Gupta, A., Darrell, T., Abbeel, P., and Levine, S. (2016).
+\newblock Learning modular neural network policies for multi-task and
+  multi-robot transfer.
+\newblock {\em CoRR}, abs/1609.07088.
+
+\bibitem[Finn et~al., 2016]{fzftm-gpsi-16}
+Finn, C., Zhang, M., Fu, J., Tan, X., McCarthy, Z., Scharff, E., and Levine, S.
+  (2016).
+\newblock Guided policy search code implementation.
+\newblock Software available from rll.berkeley.edu/gps.
+
+\bibitem[Levine et~al., 2015]{lfda-e2e-15}
+Levine, S., Finn, C., Darrell, T., and Abbeel, P. (2015).
+\newblock End-to-end training of deep visuomotor policies.
+\newblock {\em arXiv preprint arXiv:1504.00702}.
+
+\end{thebibliography}
