@@ -1,163 +1,165 @@
-\documentclass[12pt,handout]{beamer}
+\documentclass[handout]{beamer}
+\usepackage{graphicx}
+\graphicspath{ {./} }
 % \usetheme{Berkeley}
 \title{An Experimentation Toolkit for Robotics Control and Manipulation Tasks using Reinforcement Learning Algorithms}
 \subtitle{A Robot Learning Gym}
-\author{Ashwin Reddy\inst{1}}
-\institute
-{
-\inst{1}%
-The Harker School
-}
+\author{Ashwin Reddy, The Harker School}
 \date % (optional)
-{March 22, 2017}
+{March 23, 2017}
 
 \begin{document}
 \frame{\titlepage}
 \begin{frame}
     \frametitle{Introduction}
-    Goals of the project:
+    \begin{figure}
+        \includegraphics[scale=0.2]{arm}
+        \caption{A robot arm}
+    \end{figure}
     \begin{itemize}
-        \item{Build a toolkit for Deep Robot RL experimentation using a simulator}
+        \item{Suppose we have the robot pictured above}
+        \item{How to manipulate objects in the real world autonomously?}
+        \item{Maybe use AI? However, not many tools for AI-based robotics}
+        \item{To develop smart robots, a good toolkit is required}
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{Purpose}
+    \begin{itemize}
+        \item{Build a toolkit for prototyping AI-based robotics control algorithms}
+        \item{Requirements}
         \begin{itemize}
-            \item{Collect models and tasks online}
-            \item{Create an API to interface them}
+            \item{Should be able to test code quickly and often}
+            \item{Use a fast simulator}
+            \item{Easy to get started (minimal setup barriers)}
+            \item{Visualization tools}
         \end{itemize}
-        \item{Create a simple benchmark}
-        % \begin{itemize}
-        %     \item{Assess the toolkit}
-        %     \item{Identify which areas look promising}
-        % \end{itemize}
+        \item{Try to use popular tools}
     \end{itemize}
 \end{frame}
-\begin{frame}
-    \frametitle{Motivation}
-    \begin{itemize}
-        \item{Such a tool does not currently exist, but it would be helpful}
-        \item{Standard metrics missing for robot learning algorithms}
-        \item{Enables more Sim-to-Real learning}
-        \item{Does not require a real robot to operate}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Background: RL}
-    \begin{itemize}
-        \item{
-        Traditional Reinforcement Learning Paradigm (MDPs):
-        \begin{figure}[p]
-            \includegraphics[scale=0.25]{diagram1}
-        \end{figure}
-        }
-        \item{How can we train the agent to pick actions to maximize reward?}
-        \item{Goal: Learn parameters $\theta$ to stochastic policy $\pi_\theta(a_t|s_t)$}
-        % \item{Objective $\eta$ is $\max{\mathbb{E}\left[\sum_{t=0}^H{\gamma^t r_t}\right]}$}
-        \item{Objective $\eta$ is $\max{\mathbb{E}\left[  \gamma^t  \int_t^H{r(t)\mathbf{d}t}  \right]}$}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Background: ML}
-    \begin{itemize}
-        \item{Machine Learning Paradigm (using Neural Networks):
-        \begin{figure}[p]
-            \includegraphics[scale=0.2]{diagram2}
-        \end{figure}}
-        \item{Goal: make predictions}
-        \item{Given many samples of $(x,f(x))$, learn $h_\theta(x)\approx{f(x)}$}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Current Work}
-    \begin{itemize}
-        \item{Algorithms are starting to use deep machine learning:}
-        \begin{itemize}
-            \item{Google DeepMind's Deep-Q-Learning which has learned to play Atari games}
-            \item{UC Berkeley's Guided Policy Search which taught a humanoid robot to assemble toy airplanes}
-        \end{itemize}
-        \item{Different ML Architectures:}
-        \begin{itemize}
-            \item{Modular Neural Networks}
-            \item{Progressive Neural Networks}
-            \item{Reccurent Neural Networks}
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{What makes Deep RL for Robotics hard?}
-    \begin{itemize}
-        \item{Lack of large datasets (i.e: poor supervision)}
-        \item{Noisy input and can't be sure of outputs}
-        \item{Occlusions}
-        \item{Running on a real robot is expensive}
-        \item{Curse of dimensionality}
-        \item{Sparse and time-delayed rewards}
-        \item{Exploration vs. Exploitation}
-        \item{Continuous control harder than discretized actions}
-    \end{itemize}
-\end{frame}
+
+% \begin{frame}
+%     \frametitle{Background: Reinforcement Learning / Machine Learning (Neural Networks)}
+%     \begin{itemize}
+%         \item{
+%         \begin{figure}[p]
+%             \includegraphics[scale=0.25]{diagram1}
+%         \end{figure}}
+%         \item{How can we train the agent to pick actions to maximize reward?}
+%         \begin{figure}[p]
+%             \includegraphics[scale=0.2]{diagram2}
+%         \end{figure}
+%         \item{Goal: make predictions}
+%         \item{Given many samples of $(x,f(x))$, learn $h_\theta(x)\approx{f(x)}$}
+%     \end{itemize}
+% \end{frame}
+% \begin{frame}
+%     \frametitle{What makes Deep RL for Robotics hard?}
+%     \begin{itemize}
+%         \item{Algorithms}
+%         \begin{itemize}
+%             \item{Lack of large datasets (i.e: poor supervision)}
+%             \item{Curse of dimensionality}
+%             \item{Sparse time-delayed rewards}
+%             \item{Exploration vs. Exploitation}
+%             \item{Continuous control harder than discretized actions}
+%         \end{itemize}
+%         \item{Noisy input, unreliable outputs}
+%         \item{Visual Occlusions}
+%         \item{Running on a real robot is expensive}
+%     \end{itemize}
+% \end{frame}
 \begin{frame}
     \frametitle{Current Tools}
     \begin{itemize}
-        \item{OpenAI Gym: Platform for testing general RL algorithms}
-        \item{MuJoCo: Efficient simulator used by OpenAI Gym}
-        \item{OpenAI RL Lab: implements some common RL algorithms}
-        \item{Guided Policy Search: A type of Deep RL algorithm that has a package available online, also uses MuJoCo}
-        \item{DeepMind's Lab: 3D first-person games for testing Deep RL algorithms}
+        \item{OpenAI Gym: mini-games for testing algorithms}
     \end{itemize}
-    All have elements of robot learning, but don't provide a framework for it % are targeted towards it specifically
-\end{frame}
-\begin{frame}
-    \frametitle{Experimental Design}
-    \begin{itemize}
-        \item{Collect MuJoCo Robot Models}
-        \item{Build an open-source framework with models and other tools}
-        \begin{itemize}
-            \item{OpenAI MuJoCo Python bindings and Gym}
-        \end{itemize}
-        \item{Run RL algorithms}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Data Collection}
-    \begin{itemize}
-        \item{Task: Peg Insertion with $r=\frac{1}{||x-x^*||}$}%\left( \frac{\|P\|}{2} \middle\| Q \right)$}%$r=\frac{1}{||x-x^*||}$}
-        \item{Methods}
-        \begin{itemize}
-        \item{Random: take a sample from the action space}
-        \item{Cross-Entropy Method: sample parameters, evaluate, and reuse best ones}
-        \item{Policy Gradient Method: Use trajectory $\langle s, a, r, s' \rangle$ to $\theta_{k+1} \leftarrow \theta_{k} + \alpha\nabla_\theta \eta$}
-        \item{Guided Policy Search: uses trajectory optimization to train the neural net based policy}
-    \end{itemize}
-\end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Graphs (Reward vs Time)}
     \begin{figure}
-        \includegraphics[scale=0.2]{smoothed}
+        \includegraphics[scale=0.2]{walker}
+        \caption{Bipedal walking in Gym}
     \end{figure}
     \begin{itemize}
-        \item{Collected using TensorFlow's TensorBoard Visualizer, using a $0.6$ smooth}
-        \item{Teal line is policy gradient, orange line is cross-entropy, purple is random}
-        \item{Random has erratic behavior and inconsistent results as expected}
-        \item{Cross entropy is somewhat unstable but leads to more consistent results}
-        \item{Policy Gradient seems to have reached a local optimum}
+        % \item{OpenAI RL Lab implements some common RL algorithms}
+        % \item{Guided Policy Search: package for an algorithm of the same name}
+        % \item{DeepMind's Lab: tests RL algorithms with 3D first-person games}
+        \item{TensorFlow: library for machine learning (AI)}
+        \item{MuJoCo: 3D physics simulator}
+        \item{These are 3 main projects used in the toolkit}
     \end{itemize}
 \end{frame}
 \begin{frame}
-    \frametitle{Discussion and Future Work}
+    \frametitle{Designing the Framework}
     \begin{itemize}
-        \item{Continue to maintain the framework and create documentation}
-        \item{Experiment with modular networks}
-        \item{Benchmark more deep learning based algorithms}
-        \item{Try different tasks and rewards}
-    \end{itemize}
-\end{frame}
-\begin{frame}
-    \frametitle{Acknowledgements and References}
-    \begin{itemize}
-        \item{Thanks to}
+        \item{Plan}
         \begin{itemize}
-            \item{Mr. Martin Baynes for sponsoring this project}
-            \item{Soroush Nasiriany, an undergraduate researcher at UC Berkeley, for feedback on this project}
+            \item{Investigate current tools (pros/cons)}
+            \item{Build a core framework to plug above tools into}
+            \item{Extend OpenAI Gym package}
+            \item{Collect robot "models" for MuJoCo}
+            \item{Implement some algorithms}
         \end{itemize}
     \end{itemize}
 \end{frame}
-\end{document}
+\begin{frame}
+    \frametitle{Designing the Framework: Process}
+    \begin{itemize}
+        \item{Attempted mixed robots and environments}
+        \item{Learn and incorporate TensorFlow}
+        \item{Open source code and publish online (GitHub)}
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{Results}
+    \begin{itemize}
+        \item{One possible use case might be benchmarking different algorithms}
+    \end{itemize}
+    \begin{figure}
+        \includegraphics[scale=0.1]{sim1}
+        \caption{Peg Insertion Task in MuJoCo}
+    \end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{Visualizations}
+    \begin{figure}
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{ex1} % first figure itself
+            \caption{TensorFlow's histograms}
+            \end{minipage}\hfill
+            \begin{minipage}{0.45\textwidth}
+                \centering
+                \includegraphics[width=0.9\textwidth]{ex2} % second figure itself
+                \caption{TensorFlow's visual network architecture}
+            \end{minipage}
+        \end{figure}
+        \begin{figure}
+            \includegraphics[scale=0.1]{smoothed}
+            \caption{Reward vs. time graph for a few algorithms}
+        \end{figure}
+    \end{frame}
+    \begin{frame}
+        \frametitle{Conclusion}
+        \begin{itemize}
+            \item{Made it easier for myself and others to try new ideas quickly}
+            \item{Future Work}
+            \begin{itemize}
+                \item{Maintain the framework and create more extensive documentation}
+                \item{Experiment with other network architectures}
+                \item{Benchmark more deep learning based algorithms}
+                \item{Include more environments/tasks/robots}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    \begin{frame}
+        \frametitle{Acknowledgements / References}
+        \begin{itemize}
+            \item{Thanks to}
+            \begin{itemize}
+                \item{Mr. Martin Baynes for sponsoring this project}
+                \item{Soroush Nasiriany, an undergraduate researcher at UC Berkeley, and}
+                \item{Abhishek Gupta, a PhD student at UC Berkeley for feedback on this project}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    \end{document}
